@@ -11,7 +11,7 @@
   --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 
-  --step--2: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
+  --step--2: clamp(0.77rem, 0.75rem + 0.1vw, 0.83rem);
   --step--1: clamp(0.84rem, 0.8rem + 0.15vw, 0.92rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --step-1: clamp(1.13rem, 1.05rem + 0.4vw, 1.35rem);
@@ -789,7 +789,7 @@ html:not(.js) .theme-toggle { display: none; }   /* needs JS to work */
   display: block;
   margin-top: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.77rem;
   font-weight: 400;
   line-height: 1.45;
   letter-spacing: 0.01em;
@@ -1078,7 +1078,7 @@ html:not(.js) .theme-toggle { display: none; }   /* needs JS to work */
   letter-spacing: 0.01em;
   color: var(--ink);
 }
-.endpoints-count { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); }
+.endpoints-count { font-family: var(--font-mono); font-size: 0.77rem; color: var(--ink-faint); }
 
 .endpoint-list {
   display: grid;
@@ -1558,11 +1558,63 @@ html:not(.js) .theme-toggle { display: none; }   /* needs JS to work */
   padding-block: 1.75rem 2.5rem;
   border-top: 1px solid var(--rule);
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   color: var(--ink-faint);
 }
 .footer-inner p { margin: 0; }
 .footer-top { margin-left: auto; color: var(--ink-faint); }
+
+/* ---------- 15b. Scroll progress, back-to-top, small extras -------------- */
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 60;
+  height: 3px;
+  pointer-events: none;
+}
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6 55%, #14B8A6);
+}
+html:not(.js) .scroll-progress,
+html:not(.js) .to-top { display: none; }
+
+.to-top {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  background: var(--bg-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-out), visibility 0s linear 0.25s,
+    background-color 0.2s ease, border-color 0.2s ease;
+}
+.to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+.to-top:hover { border-color: var(--accent); color: var(--accent-text); }
+
+.status-inline { display: inline-flex; align-items: center; gap: 0.55rem; }
+
+.project-card, .cred { transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+.project-card:hover { box-shadow: var(--shadow-card); border-color: var(--rule-strong); }
 
 /* ---------- 16. Motion (only when the user hasn't asked to reduce it) ---- */
 

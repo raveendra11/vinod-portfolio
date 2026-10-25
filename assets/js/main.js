@@ -213,6 +213,25 @@
     });
   }
 
+  /* ---------- Scroll progress + back-to-top ---------- */
+  var progressBar = document.querySelector('.scroll-progress span');
+  var toTop = document.querySelector('.to-top');
+  if (progressBar || toTop) {
+    var ticking = false;
+    var paintScroll = function () {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var y = window.scrollY || window.pageYOffset || 0;
+      if (progressBar) progressBar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+      if (toTop) toTop.classList.toggle('is-visible', y > 700);
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(paintScroll); }
+    }, { passive: true });
+    window.addEventListener('resize', paintScroll);
+    paintScroll();
+  }
+
   /* ---------- Footer year ---------- */
   var year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
